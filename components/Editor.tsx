@@ -53,7 +53,6 @@ const CodeEditor: NextPage = () => {
             fontFamily: '"Fira code", "Fira Mono", monospace',
             fontSize: 12,
             backgroundColor: "#242424",
-            color: "#fff",
             borderRadius: 10,
             width: 600,
             height: 500
