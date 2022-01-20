@@ -1,0 +1,24 @@
+.testButton {
+    border: 1px solid #0070f3;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #121212;
+    outline: none;
+    color: #fff;
+    margin-top: 30px;
+    width: 200px;
+    cursor: pointer;
+    transition: .125 ease;
+}
+
+.testButton:hover {
+    border: 2px solid #0070f3;
+}
+
+.testButton:not(:last-child) {
+    margin-right: 30px;
+}
+
+.buttonWrapper {
+    display: flex;
+}

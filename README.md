@@ -1,34 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# MoonCoder 🌑
 
-## Getting Started
+<!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
 
-First, run the development server:
+![GitHub repo size](https://img.shields.io/github/repo-size/IgorDuca/MoonCoder?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/IgorDuca/MoonCoder?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/IgorDuca/MoonCoder?style=for-the-badge)
+![Bitbucket open issues](https://img.shields.io/bitbucket/issues/IgorDuca/MoonCoder?style=for-the-badge)
+![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/IgorDuca/MoonCoder?style=for-the-badge)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<img src="https://i.ibb.co/9smPFJC/imagem-2022-01-20-125010.png" alt="exemplo imagem">
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> MoonCoder é uma plataforma de estudos de algoritmos, onde é possível escrever códigos, testá-los e ver os resultados esperados.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Ajustes e melhorias
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- [x] Espaço com interpretador de código
+- [ ] Implementação de novas questões
+- [ ] Taxa de acertos comparada com as tentativas do usuário
 
-## Learn More
+## ☕ Usando o MoonCoder
 
-To learn more about Next.js, take a look at the following resources:
+Para usar o MoonCoder, siga estas etapas:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Acesse o website https://mooncoder.netlify.app e divirta-se aprendendo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 📫 Contribuindo para o MoonCoder
+<!---Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado--->
+Para contribuir com MoonCoder, siga estas etapas:
 
-## Deploy on Vercel
+1. Me siga no meu [LinkedIn](https://linkedin.com/in/igorfelipeduca)
+3. Me siga aqui no Github
+2. Envie suas sugestões por e-mail: igorfelipeduca@gmail.com
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🤝 Colaboradores
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<table>
+  <tr>
+    <td align="center">
+      <a href="#">
+        <img src="https://avatars.githubusercontent.com/u/57298214?v=4" width="100px;" alt="Foto do Igor Duca no GitHub"/><br>
+        <sub>
+          <b>Igor Duca</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+## 📝 Licença
+
+Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
+
+[⬆ Voltar ao topo](#nome-do-projeto)<br>
