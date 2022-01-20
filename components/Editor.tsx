@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { NextPage } from 'next'
 import Editor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 
+import oddNumber from '../algorithms/easy/odd_number' 
+import diffArrays from '../algorithms/medium/diff_arrays'
+
 import editor_styles from "../styles/components/Components.editor.module.css"
 import styles from "../styles/Home.module.css"
 
-const result = "";
+type questionType = {
+  text: Function,
+  question: Function
+}
  
-const CodeEditor: NextPage = () => {
+export default function CodeEditor({ difficulty }: { difficulty: string; }): JSX.Element {
   const [ code, setCode ] = useState(`
   function solve(num) {
     // Ecreva seu código aqui
@@ -21,59 +27,100 @@ const CodeEditor: NextPage = () => {
   const [ result, setResult ] = useState("")
   const [ isResultHidden, setHidden ] = useState(true)
   const [ expectedResult, setExpected ] = useState("")
-  const [ testNumber, setTestNumber ] = useState(0)
+  const [ testCase, setTestCase ] = useState("")
+  const [ questionIndex, setQuestionIndex ] = useState(0)
+  const [ questionText, setText ] = useState("")
+
+  var easyFuncs: questionType[] = [ oddNumber ]
+  var midFuncs: questionType[] = [ diffArrays ]
+
+  useEffect(() => {
+    if(difficulty === "easy") {
+      var index = Math.floor(Math.random() * easyFuncs.length);
+
+      setQuestionIndex(index);
+      setText(easyFuncs[index].text());
+    } else if(difficulty === "medium") {
+      var index = Math.floor(Math.random() * midFuncs.length);
+
+      setQuestionIndex(index);
+      setText(midFuncs[index].text());
+    }
+  }, [difficulty])
 
   function testCode(code: string) {
-    var randomNumber = Math.floor(Math.random() * 101);
-    setTestNumber(randomNumber)
+    var userFun = new Function(code);
 
-    const test_function = new Function(code);
+    setHidden(false);
 
-    setResult(JSON.stringify(test_function(randomNumber)))
-    setExpected(JSON.stringify(getResult(randomNumber)))
+    if(difficulty === "easy") {
+      var index = questionIndex;
+      var question = easyFuncs[index].question();
+      var userResponse = userFun(question.testCase);
 
-    console.log({randomNumber, result, expectedResult})
+      console.log(userResponse);
+      console.log(question.response);
 
-    setHidden(false)
+      setResult(JSON.stringify(userResponse));
+      setTestCase(JSON.stringify(question.testCase));
+      setExpected(JSON.stringify(question.response))
+    } else if(difficulty === "medium") {
+      var index = questionIndex;
+      var question = midFuncs[index].question();
+      var userResponse = userFun(question.testCase);
+
+      console.log(userResponse);
+      console.log(question.response);
+
+      setResult(JSON.stringify(userResponse));
+      setTestCase(JSON.stringify(question.testCase));
+      setExpected(JSON.stringify(question.response))
+    }
   }
 
-  function getResult(num: number) {
-    if(num % 2 == 0) return false
-    else return true;
+  function resultText() {
+    if(result == expectedResult) return (
+      <h3 style={{color: "#62da62"}} >RESPOSTA CORRETA</h3>
+    )
+    else return ( <h3 style={{color: "#cf4e4e"}} >RESPOSTA ERRADA</h3> )
   }
 
   return (
     <div className={styles.main} style={{marginTop: -100}} >
-        <Editor
-          value={code}
-          onValueChange={code => setCode(code)}
-          highlight={code => highlight(code, languages.js)}
-          padding={10}
-          style={{
-            fontFamily: '"Fira code", "Fira Mono", monospace',
-            fontSize: 12,
-            backgroundColor: "#242424",
-            borderRadius: 10,
-            width: 600,
-            height: 500
-          }}
-        />
 
-        <div className={editor_styles.resultContainer} hidden={isResultHidden} >
-          <h3>Número de teste: {""} <code className={styles.code}>{testNumber}</code></h3>
-          <h3>Esperado: {""} <code className={styles.code}>{expectedResult}</code></h3>
-          <h3>Recebido: {""} <code className={styles.code}>{result}</code></h3>
-        </div>
+      <p className={styles.description} id="questionText" style={{maxWidth: 600}} >{questionText}</p>
 
-        <div className={editor_styles.buttonWrapper} >
-          <button 
-            className={editor_styles.testButton}
-            onClick={() => { testCode(code) }}
-          >Rodar teste</button>
-          <button className={editor_styles.testButton}>Submeter aplicação</button>
-        </div>
+      <Editor
+        value={code}
+        onValueChange={code => setCode(code)}
+        highlight={code => highlight(code, languages.js)}
+        padding={10}
+        style={{
+          fontFamily: '"Fira code", "Fira Mono", monospace',
+          fontSize: 12,
+          backgroundColor: "#242424",
+          borderRadius: 10,
+          width: 600,
+          height: 500
+        }}
+      />
+
+      <div className={editor_styles.resultContainer} hidden={isResultHidden} >
+        <h3>Caso de teste: {""} <code className={styles.code}>{testCase}</code></h3>
+        <h3>Esperado: {""} <code className={styles.code}>{expectedResult}</code></h3>
+        <h3>Recebido: {""} <code className={styles.code}>{result}</code></h3>
+        {
+          resultText()
+        }
+      </div>
+
+      <div className={editor_styles.buttonWrapper} >
+        <button 
+          className={editor_styles.testButton}
+          onClick={() => { testCode(code) }}
+        >Rodar teste</button>
+        <button className={editor_styles.testButton}>Submeter aplicação</button>
+      </div>
     </div>
   );
 }
-
-export default CodeEditor

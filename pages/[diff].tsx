@@ -15,6 +15,8 @@ const CodePage: NextPage = () => {
     const router = useRouter();
     var { diff } = router.query;
 
+    var unique_diff = (data: any) => { return data };
+
     useEffect(() => {
 
     }, [diff])
@@ -33,10 +35,8 @@ const CodePage: NextPage = () => {
                         Resolva algoritmos no nível{' '}
                         <code className={styles.code}>{diff}</code>
                     </p>
-
-                    <p className={styles.description} id="questionText" >Descubra se o número recebido é ou não um número ímpar, caso seja par, retorne false, caso seja ímpar retorne true</p>
                     
-                    <CodeEditor />
+                    <CodeEditor difficulty={unique_diff(diff)} />
                 </div>
             </main>
         </div>
