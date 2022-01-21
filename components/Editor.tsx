@@ -7,22 +7,19 @@ import 'prismjs/components/prism-javascript';
 
 import oddNumber from '../algorithms/easy/odd_number' 
 import diffArrays from '../algorithms/medium/diff_arrays'
+import listCompleter from '../algorithms/hard/listCompleter'
 
 import editor_styles from "../styles/components/Components.editor.module.css"
 import styles from "../styles/Home.module.css"
 
 type questionType = {
   text: Function,
-  question: Function
+  question: Function,
+  placeholder: Function
 }
  
 export default function CodeEditor({ difficulty }: { difficulty: string; }): JSX.Element {
-  const [ code, setCode ] = useState(`
-  function solve(num) {
-    // Ecreva seu código aqui
-  }
-  
-  return solve();`)
+  const [ code, setCode ] = useState(``)
 
   const [ result, setResult ] = useState("")
   const [ isResultHidden, setHidden ] = useState(true)
@@ -33,6 +30,7 @@ export default function CodeEditor({ difficulty }: { difficulty: string; }): JSX
 
   var easyFuncs: questionType[] = [ oddNumber ]
   var midFuncs: questionType[] = [ diffArrays ]
+  var hardFuncs: questionType[] = [ listCompleter ]
 
   useEffect(() => {
     if(difficulty === "easy") {
@@ -40,11 +38,19 @@ export default function CodeEditor({ difficulty }: { difficulty: string; }): JSX
 
       setQuestionIndex(index);
       setText(easyFuncs[index].text());
+      setCode(easyFuncs[index].placeholder());
     } else if(difficulty === "medium") {
       var index = Math.floor(Math.random() * midFuncs.length);
 
       setQuestionIndex(index);
       setText(midFuncs[index].text());
+      setCode(midFuncs[index].placeholder());
+    } else if(difficulty === "hard") {
+      var index = Math.floor(Math.random() * hardFuncs.length);
+
+      setQuestionIndex(index);
+      setText(hardFuncs[index].text());
+      setCode(hardFuncs[index].placeholder());
     }
   }, [difficulty])
 

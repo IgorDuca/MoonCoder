@@ -38,11 +38,18 @@ export default new class DiffArrays {
 
             console.log({ arrayOne, arrayTwo })
 
-            return { testCase: [old_arr_one, old_arr_two], response: [arrayOne, arrayTwo] };
+            return { testCase: { arrayOne, arrayTwo }, response: [arrayOne, arrayTwo] };
         }
 
         return getUniqueValues();
     };
 
-    public text() { return "Voce receberá dois vetores formados por números de 0 a 10 e com uma quantidade de números que também varia de 0 a 10. Remova os números semelhantes dos dois vetores e retorne apenas os números únicos." }
+    public text() { return "Voce receberá dois vetores formados por números de 0 a 10 e com uma quantidade de números que também varia de 0 a 10. Remova os números semelhantes dos dois vetores e retorne apenas os números únicos." };
+
+    public placeholder() { return `
+    function solve(arrayOne, arrayTwo) {
+      return { arrayOne, arrayTwo } // Retorne os valores neste padrão!
+    }
+    
+    return solve();` }
 }
