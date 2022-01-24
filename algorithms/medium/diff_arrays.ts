@@ -51,5 +51,12 @@ export default new class DiffArrays {
       return { arrayOne, arrayTwo } // Retorne os valores neste padrão!
     }
     
-    return solve();` }
+    return solve();` };
+
+    public questionName() { return "diff_arrays" };
+
+    public variableInjection(code: string, vari: string) {
+        if(vari == null || vari == "") vari = JSON.stringify(Math.floor(Math.random() * 101));
+        return code.replace("return solve();", `return solve(${vari});`)
+  }
 }

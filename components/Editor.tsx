@@ -9,13 +9,17 @@ import oddNumber from '../algorithms/easy/odd_number'
 import diffArrays from '../algorithms/medium/diff_arrays'
 import listCompleter from '../algorithms/hard/listCompleter'
 
+import submitCode from '../scripts/submitCode'
+
 import editor_styles from "../styles/components/Components.editor.module.css"
 import styles from "../styles/Home.module.css"
 
 type questionType = {
   text: Function,
   question: Function,
-  placeholder: Function
+  placeholder: Function,
+  questionName: Function,
+  variableInjection: Function
 }
  
 export default function CodeEditor({ difficulty }: { difficulty: string; }): JSX.Element {
@@ -27,6 +31,15 @@ export default function CodeEditor({ difficulty }: { difficulty: string; }): JSX
   const [ testCase, setTestCase ] = useState("")
   const [ questionIndex, setQuestionIndex ] = useState(0)
   const [ questionText, setText ] = useState("")
+
+  const [ isTestAble, setTestStatus ] = useState(false)
+
+  const [ rightQuestions, setRightQuestions ] = useState(0)
+  const [ rightPercentage, setPercentage ] = useState(0)
+  const [ totalTested, setTested ] = useState(0)
+
+  const [ finalSumbitHidden, setFinalHidden ] = useState(true)
+  const [ submitButtonStatus, setSubStatus ] = useState(false)
 
   var easyFuncs: questionType[] = [ oddNumber ]
   var midFuncs: questionType[] = [ diffArrays ]
@@ -52,35 +65,34 @@ export default function CodeEditor({ difficulty }: { difficulty: string; }): JSX
       setText(hardFuncs[index].text());
       setCode(hardFuncs[index].placeholder());
     }
-  }, [difficulty])
+  }, [difficulty]);
+
+  function tester(arr: any[], code: string) {
+    console.log(code)
+
+    var userFun = new Function(code);
+    var index = questionIndex;
+
+    var question = arr[index].question();
+    var userResponse = userFun(question.testCase);
+
+    console.log(userResponse);
+    console.log(question.response);
+
+    setResult(JSON.stringify(userResponse));
+    setTestCase(JSON.stringify(question.testCase));
+    setExpected(JSON.stringify(question.response));
+  }
 
   function testCode(code: string) {
-    var userFun = new Function(code);
-
     setHidden(false);
 
     if(difficulty === "easy") {
-      var index = questionIndex;
-      var question = easyFuncs[index].question();
-      var userResponse = userFun(question.testCase);
-
-      console.log(userResponse);
-      console.log(question.response);
-
-      setResult(JSON.stringify(userResponse));
-      setTestCase(JSON.stringify(question.testCase));
-      setExpected(JSON.stringify(question.response))
+      tester(easyFuncs, easyFuncs[questionIndex].variableInjection(code, testCase));
     } else if(difficulty === "medium") {
-      var index = questionIndex;
-      var question = midFuncs[index].question();
-      var userResponse = userFun(question.testCase);
-
-      console.log(userResponse);
-      console.log(question.response);
-
-      setResult(JSON.stringify(userResponse));
-      setTestCase(JSON.stringify(question.testCase));
-      setExpected(JSON.stringify(question.response))
+      tester(midFuncs, midFuncs[questionIndex].variableInjection(code, testCase));
+    } else if(difficulty === "hard") {
+      tester(hardFuncs, hardFuncs[questionIndex].variableInjection(code, testCase));
     }
   }
 
@@ -89,6 +101,33 @@ export default function CodeEditor({ difficulty }: { difficulty: string; }): JSX
       <h3 style={{color: "#62da62"}} >RESPOSTA CORRETA</h3>
     )
     else return ( <h3 style={{color: "#cf4e4e"}} >RESPOSTA ERRADA</h3> )
+  }
+
+  function codeSubmit(code: string) {
+    setTestStatus(true)
+
+    if(difficulty === "easy") {
+      var submited = submitCode(code, easyFuncs[questionIndex]);
+      setSubStatus(true);
+      setRightQuestions(submited.right_questions);
+      setPercentage(submited.percentage);
+      setTested(submited.loopCount);
+      setFinalHidden(false);
+    } else if (difficulty === "medium") {
+      var submited = submitCode(code, midFuncs[questionIndex]);
+      setSubStatus(true);
+      setRightQuestions(submited.right_questions);
+      setTested(submited.loopCount);
+      setPercentage(submited.percentage);
+      setFinalHidden(false);
+    } else if (difficulty === "hard") {
+      var submited = submitCode(code, hardFuncs[questionIndex]);
+      setSubStatus(true);
+      setRightQuestions(submited.right_questions);
+      setTested(submited.loopCount);
+      setPercentage(submited.percentage);
+      setFinalHidden(false);
+    }
   }
 
   return (
@@ -124,8 +163,21 @@ export default function CodeEditor({ difficulty }: { difficulty: string; }): JSX
         <button 
           className={editor_styles.testButton}
           onClick={() => { testCode(code) }}
+          type="button"
+          disabled={isTestAble}
         >Rodar teste</button>
-        <button className={editor_styles.testButton}>Submeter aplicação</button>
+        <button 
+          className={editor_styles.testButton}
+          onClick={() => { codeSubmit(code) }}
+          type="button"
+          disabled={submitButtonStatus}
+        >Submeter aplicação</button>
+      </div>
+
+      <div style={{marginTop: 30}} hidden={finalSumbitHidden} >
+        <h2>QUESTÃO SUBMETIDA</h2>
+        <h3>PORCENTAGEM DE ACERTO: {rightPercentage}%</h3>
+        <h3>QUESTÕES ACERTADAS: {rightQuestions}/{totalTested}</h3>
       </div>
     </div>
   );

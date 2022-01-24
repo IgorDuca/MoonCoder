@@ -11,8 +11,13 @@
     transition: .125 ease;
 }
 
-.testButton:hover {
+.testButton:hover:enabled {
     border: 2px solid #0070f3;
+}
+
+.testButton:disabled {
+    filter: grayscale(100%);
+    cursor: not-allowed;
 }
 
 .testButton:not(:last-child) {

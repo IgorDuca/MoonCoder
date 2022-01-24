@@ -20,5 +20,12 @@ export default new class listCompleter {
       // Ecreva seu código aqui
     }
     
-    return solve(); // Não se esqueça de retornar sua resposta!` }
+    return solve(); // Não se esqueça de retornar sua resposta!` };
+
+    public questionName() { return "listCompleter" };
+
+    public variableInjection(code: string, vari: string) {
+      if(vari == null || vari == "") vari = JSON.stringify(Math.floor(Math.random() * 101));
+      return code.replace("return solve();", `return solve(${vari});`)
+  }
 }
